@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Ideas Vault</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* [ALL YOUR CSS FROM BEFORE - KEEP IT EXACTLY THE SAME] */
+        :root {
+            --parchment: #f7f4ef;
+            --frosted-blue: #acedff;
+            --baby-blue: #89bbfe;
+            --dusty-denim: #6f8ab7;
+            --charcoal: #615d6c;
+            --shadow-sm: 0 2px 8px rgba(97, 93, 108, 0.1);
+            --shadow-md: 0 4px 16px rgba(97, 93, 108, 0.15);
+            --shadow-lg: 0 8px 32px rgba(97, 93, 108, 0.2);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, var(--parchment) 0%, #e8e4db 100%); color: var(--charcoal); min-height: 100vh; }
+        .page { display: none; }
+        .page.active { display: block; }
+        .login-container { display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; background: linear-gradient(135deg, var(--dusty-denim) 0%, var(--charcoal) 100%); }
+        .login-box { background: white; padding: 48px; border-radius: 24px; box-shadow: var(--shadow-lg); width: 100%; max-width: 440px; animation: slideUp 0.6s ease-out; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .login-header { text-align: center; margin-bottom: 40px; }
+        .login-header i { font-size: 64px; color: var(--dusty-denim); margin-bottom: 16px; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        .login-header h1 { font-size: 32px; font-weight: 700; color: var(--charcoal); margin-bottom: 8px; }
+        .login-header p { color: var(--dusty-denim); font-size: 16px; }
+        .input-group { position: relative; margin-bottom: 24px; }
+        .input-group i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--dusty-denim); font-size: 18px; }
+        .input-group input { width: 100%; padding: 16px 16px 16px 50px; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 16px; transition: var(--transition); background: var(--parchment); }
+        .input-group input:focus { outline: none; border-color: var(--dusty-denim); background: white; }
+        .btn-primary { width: 100%; padding: 16px; background: linear-gradient(135deg, var(--dusty-denim) 0%, var(--charcoal) 100%); color: white; border: none; border-radius: 12px; font-size: 18px; font-weight: 600; cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .btn-primary:active { transform: translateY(0); }
+        .error-message { color: #e74c3c; font-size: 14px; margin-top: 16px; text-align: center; font-weight: 500; }
+        .navbar { background: white; padding: 16px 32px; box-shadow: var(--shadow-sm); display: flex; justify-content: space-between; align-items: center; gap: 24px; position: sticky; top: 0; z-index: 100; }
+        .nav-left { display: flex; align-items: center; gap: 12px; font-weight: 700; color: var(--charcoal); }
+        .nav-left i { font-size: 28px; color: var(--dusty-denim); }
+        .nav-center { flex: 1; max-width: 600px; }
+        .search-bar { position: relative; }
+        .search-bar i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--dusty-denim); }
+        .search-bar input { width: 100%; padding: 12px 16px 12px 48px; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 15px; transition: var(--transition); background: var(--parchment); }
+        .search-bar input:focus { outline: none; border-color: var(--dusty-denim); background: white; }
+        .nav-right { display: flex; align-items: center; gap: 16px; }
+        .user-badge { display: flex; align-items: center; gap: 8px; padding: 8px 16px; background: var(--frosted-blue); border-radius: 24px; font-weight: 600; color: var(--charcoal); }
+        .user-badge i { font-size: 20px; }
+        .btn-icon { width: 44px; height: 44px; border-radius: 12px; border: none; background: var(--charcoal); color: white; cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+        .btn-icon:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .container { max-width: 1400px; margin: 0 auto; padding: 32px; }
+        .tabs { display: flex; gap: 16px; margin-bottom: 32px; background: white; padding: 8px; border-radius: 16px; box-shadow: var(--shadow-sm); width: fit-content; }
+        .tab-btn { padding: 12px 24px; border: none; background: transparent; border-radius: 12px; font-size: 16px; font-weight: 600; color: var(--charcoal); cursor: pointer; transition: var(--transition); display: flex; align-items: center; gap: 8px; }
+        .tab-btn:hover { background: var(--parchment); }
+        .tab-btn.active { background: var(--dusty-denim); color: white; }
+        .badge { background: rgba(255, 255, 255, 0.3); padding: 2px 10px; border-radius: 12px; font-size: 13px; font-weight: 700; }
+        .tab-btn.active .badge { background: rgba(255, 255, 255, 0.25); }
+        .action-bar { margin-bottom: 32px; }
+        .action-bar .btn-primary { width: auto; padding: 14px 28px; font-size: 16px; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .ideas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 24px; }
+        .idea-card { background: white; border-radius: 16px; padding: 24px; box-shadow: var(--shadow-sm); transition: var(--transition); border: 2px solid transparent; animation: cardEntry 0.5s ease-out; }
+        @keyframes cardEntry { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        .idea-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--baby-blue); }
+        .idea-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+        .idea-title { font-size: 20px; font-weight: 700; color: var(--charcoal); flex: 1; line-height: 1.3; }
+        .idea-actions { display: flex; gap: 8px; }
+        .btn-small { width: 36px; height: 36px; border-radius: 8px; border: none; cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; font-size: 14px; }
+        .btn-edit { background: var(--baby-blue); color: var(--charcoal); }
+        .btn-edit:hover { background: var(--frosted-blue); transform: scale(1.1); }
+        .btn-sell { background: var(--dusty-denim); color: white; }
+        .btn-sell:hover { background: var(--charcoal); transform: scale(1.1); }
+        .idea-description { color: #666; font-size: 15px; line-height: 1.6; margin-bottom: 16px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .idea-keywords { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+        .keyword-tag { background: var(--frosted-blue); color: var(--charcoal); padding: 6px 12px; border-radius: 20px; font-size: 13px; font-weight: 600; }
+        .idea-meta { display: flex; justify-content: space-between; align-items: center; padding-top: 16px; border-top: 2px solid var(--parchment); font-size: 13px; color: #888; }
+        .idea-user { display: flex; align-items: center; gap: 6px; font-weight: 600; color: var(--dusty-denim); }
+        .idea-timestamp { display: flex; align-items: center; gap: 6px; }
+        .sold-badge { background: var(--charcoal); color: white; padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 12px; }
+        .empty-state { text-align: center; padding: 80px 20px; color: #999; }
+        .empty-state i { font-size: 80px; color: #ddd; margin-bottom: 24px; }
+        .empty-state h3 { font-size: 24px; color: var(--charcoal); margin-bottom: 8px; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(97, 93, 108, 0.8); backdrop-filter: blur(4px); z-index: 1000; align-items: center; justify-content: center; animation: fadeInModal 0.3s ease-out; }
+        @keyframes fadeInModal { from { opacity: 0; } to { opacity: 1; } }
+        .modal.active { display: flex; }
+        .modal-content { background: white; border-radius: 24px; width: 90%; max-width: 600px; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg); animation: slideUpModal 0.4s ease-out; }
+        @keyframes slideUpModal { from { transform: translateY(50px) scale(0.95); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 24px 32px; border-bottom: 2px solid var(--parchment); }
+        .modal-header h3 { font-size: 24px; color: var(--charcoal); display: flex; align-items: center; gap: 12px; }
+        .close-btn { width: 40px; height: 40px; border-radius: 8px; border: none; background: var(--parchment); color: var(--charcoal); cursor: pointer; transition: var(--transition); font-size: 18px; }
+        .close-btn:hover { background: var(--charcoal); color: white; }
+        #ideaForm { padding: 32px; }
+        .form-group { margin-bottom: 24px; }
+        .form-group label { display: flex; align-items: center; gap: 8px; font-weight: 600; color: var(--charcoal); margin-bottom: 8px; font-size: 15px; }
+        .form-group input, .form-group textarea { width: 100%; padding: 14px 16px; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 15px; font-family: inherit; transition: var(--transition); background: var(--parchment); }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--dusty-denim); background: white; }
+        .form-group textarea { resize: vertical; min-height: 120px; }
+        .form-group small { display: block; margin-top: 8px; color: #888; font-size: 13px; }
+        .modal-actions { display: flex; gap: 16px; padding-top: 24px; }
+        .btn-secondary { flex: 1; padding: 14px; background: var(--parchment); color: var(--charcoal); border: 2px solid #e0e0e0; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-secondary:hover { background: #e0e0e0; }
+        .modal-actions .btn-primary { flex: 1; }
+        @media (max-width: 768px) {
+            .navbar { flex-wrap: wrap; padding: 16px; }
+            .nav-center { order: 3; width: 100%; margin-top: 16px; }
+            .ideas-grid { grid-template-columns: 1fr; }
+            .login-box { padding: 32px 24px; }
+            .tabs { width: 100%; }
+            .tab-btn { flex: 1; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <!-- [KEEP ALL YOUR HTML FROM BEFORE] -->
+    <div id="loginPage" class="page active">
+        <div class="login-container">
+            <div class="login-box">
+                <div class="login-header">
+                    <i class="fas fa-lightbulb"></i>
+                    <h1>Project Ideas Vault</h1>
+                    <p>Secure your innovative thoughts</p>
+                </div>
+                <form id="loginForm">
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="username" placeholder="Username" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                    <div id="loginError" class="error-message"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="mainPage" class="page">
+        <nav class="navbar">
+            <div class="nav-left">
+                <i class="fas fa-lightbulb"></i>
+                <h2>Ideas Vault</h2>
+            </div>
+            <div class="nav-center">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search by title or keywords...">
+                </div>
+            </div>
+            <div class="nav-right">
+                <span class="user-badge">
+                    <i class="fas fa-user-circle"></i>
+                    <span id="currentUser"></span>
+                </span>
+                <button id="logoutBtn" class="btn-icon" title="Logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </nav>
+
+        <div class="container">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="active">
+                    <i class="fas fa-fire"></i> Active Ideas
+                    <span class="badge" id="activeCount">0</span>
+                </button>
+                <button class="tab-btn" data-tab="sold">
+                    <i class="fas fa-check-circle"></i> Sold Ideas
+                    <span class="badge" id="soldCount">0</span>
+                </button>
+            </div>
+
+            <div class="action-bar">
+                <button id="addIdeaBtn" class="btn-primary">
+                    <i class="fas fa-plus"></i> Add New Idea
+                </button>
+            </div>
+
+            <div id="activeTab" class="tab-content active">
+                <div id="activeIdeas" class="ideas-grid"></div>
+                <div id="noActiveIdeas" class="empty-state">
+                    <i class="fas fa-lightbulb"></i>
+                    <h3>No Active Ideas Yet</h3>
+                    <p>Start by adding your first brilliant idea!</p>
+                </div>
+            </div>
+
+            <div id="soldTab" class="tab-content">
+                <div id="soldIdeas" class="ideas-grid"></div>
+                <div id="noSoldIdeas" class="empty-state">
+                    <i class="fas fa-box-open"></i>
+                    <h3>No Sold Ideas</h3>
+                    <p>Ideas marked as sold will appear here</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="ideaModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">
+                    <i class="fas fa-lightbulb"></i> Add New Idea
+                </h3>
+                <button class="close-btn" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="ideaForm">
+                <input type="hidden" id="ideaId">
+                <div class="form-group">
+                    <label><i class="fas fa-heading"></i> Title</label>
+                    <input type="text" id="ideaTitle" placeholder="Enter project title" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-align-left"></i> Description</label>
+                    <textarea id="ideaDescription" rows="6" placeholder="Describe your idea in detail..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-tags"></i> Keywords</label>
+                    <input type="text" id="ideaKeywords" placeholder="e.g., web, mobile, AI (comma-separated)">
+                    <small>Separate keywords with commas for easy searching</small>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" id="cancelBtn">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-save"></i> Save Idea
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+    <script>
+        // ⚠️ REPLACE THIS WITH YOUR FIREBASE CONFIG FROM STEP 3
+const firebaseConfig = {
+  apiKey: "AIzaSyBy3jkbdFy4y8_vPmnILS8GPwzoyuctmSI",
+  authDomain: "projectideasvault.firebaseapp.com",
+  databaseURL: "https://projectideasvault-default-rtdb.firebaseio.com",
+  projectId: "projectideasvault",
+  storageBucket: "projectideasvault.firebasestorage.app",
+  messagingSenderId: "294930569880",
+  appId: "1:294930569880:web:c26dcfe19bd111ba9f0eed",
+  measurementId: "G-FF3QRC86Y0"
+};
+
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        class IdeaVault {
+            constructor() {
+                this.currentUser = null;
+                this.users = this.getUsers();
+                this.ideas = [];
+                this.init();
+            }
+
+getUsers() {
+    const users = [
+        { username: "reetu", password: "reetu@123" },
+        { username: "hitendra", password: "hitendra@123" },
+        { username: "vinay", password: "vinay@123" },
+        { username: "sowmya", password: "sowmya@123" },
+        { username: "harshit", password: "harshit@123" },
+        { username: "prajjawal", password: "prajjawal@123" },
+        { username: "nikunj", password: "nikunj@123" },
+        { username: "ariz", password: "ariz@123" },
+        { username: "priya", password: "priya@123" },
+        { username: "heena", password: "heena@123" },
+        { username: "kate", password: "kate789" },
+        { username: "leo", password: "leo@2024" },
+        { username: "maya", password: "maya_123" },
+        { username: "noah", password: "noah456" },
+        { username: "olivia", password: "olivia#99" }
+    ];
+    return users;
+}
+
+
+            init() {
+                this.setupLoginForm();
+                this.setupMainPage();
+                this.checkSession();
+            }
+
+            checkSession() {
+                const session = localStorage.getItem('vault_session');
+                if (session) {
+                    this.currentUser = session;
+                    this.showMainPage();
+                    this.loadIdeasFromFirebase();
+                } else {
+                    this.showLoginPage();
+                }
+            }
+
+            loadIdeasFromFirebase() {
+                database.ref('ideas').on('value', (snapshot) => {
+                    const data = snapshot.val();
+                    this.ideas = data ? Object.values(data) : [];
+                    this.renderIdeas();
+                    this.updateCounts();
+                });
+            }
+
+            setupLoginForm() {
+                document.getElementById('loginForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleLogin();
+                });
+            }
+
+            handleLogin() {
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value;
+                const errorMsg = document.getElementById('loginError');
+
+                const user = this.users.find(u => u.username === username && u.password === password);
+
+                if (user) {
+                    this.currentUser = username;
+                    localStorage.setItem('vault_session', username);
+                    errorMsg.textContent = '';
+                    this.showMainPage();
+                    this.loadIdeasFromFirebase();
+                } else {
+                    errorMsg.textContent = 'Invalid username or password';
+                }
+            }
+
+            showLoginPage() {
+                document.getElementById('loginPage').classList.add('active');
+                document.getElementById('mainPage').classList.remove('active');
+            }
+
+            showMainPage() {
+                document.getElementById('loginPage').classList.remove('active');
+                document.getElementById('mainPage').classList.add('active');
+                document.getElementById('currentUser').textContent = this.currentUser;
+            }
+
+            setupMainPage() {
+                document.getElementById('logoutBtn').addEventListener('click', () => {
+                    localStorage.removeItem('vault_session');
+                    this.currentUser = null;
+                    this.showLoginPage();
+                    document.getElementById('loginForm').reset();
+                });
+
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        this.switchTab(btn.dataset.tab);
+                    });
+                });
+
+                document.getElementById('addIdeaBtn').addEventListener('click', () => {
+                    this.openModal();
+                });
+
+                document.getElementById('closeModal').addEventListener('click', () => {
+                    this.closeModal();
+                });
+
+                document.getElementById('cancelBtn').addEventListener('click', () => {
+                    this.closeModal();
+                });
+
+                document.getElementById('ideaForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.saveIdea();
+                });
+
+                document.getElementById('searchInput').addEventListener('input', () => {
+                    this.renderIdeas();
+                });
+
+                document.getElementById('ideaModal').addEventListener('click', (e) => {
+                    if (e.target.id === 'ideaModal') {
+                        this.closeModal();
+                    }
+                });
+            }
+
+            switchTab(tab) {
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.getElementById(`${tab}Tab`).classList.add('active');
+                this.renderIdeas();
+            }
+
+            openModal(ideaId = null) {
+                const modal = document.getElementById('ideaModal');
+                const modalTitle = document.getElementById('modalTitle');
+
+                if (ideaId) {
+                    const idea = this.ideas.find(i => i.id === ideaId);
+                    document.getElementById('ideaId').value = idea.id;
+                    document.getElementById('ideaTitle').value = idea.title;
+                    document.getElementById('ideaDescription').value = idea.description;
+                    document.getElementById('ideaKeywords').value = idea.keywords.join(', ');
+                    modalTitle.innerHTML = '<i class="fas fa-edit"></i> Edit Idea';
+                } else {
+                    document.getElementById('ideaForm').reset();
+                    document.getElementById('ideaId').value = '';
+                    modalTitle.innerHTML = '<i class="fas fa-lightbulb"></i> Add New Idea';
+                }
+
+                modal.classList.add('active');
+            }
+
+            closeModal() {
+                document.getElementById('ideaModal').classList.remove('active');
+                document.getElementById('ideaForm').reset();
+            }
+
+            saveIdea() {
+                const ideaId = document.getElementById('ideaId').value;
+                const title = document.getElementById('ideaTitle').value.trim();
+                const description = document.getElementById('ideaDescription').value.trim();
+                const keywordsInput = document.getElementById('ideaKeywords').value.trim();
+                const keywords = keywordsInput ? keywordsInput.split(',').map(k => k.trim()).filter(k => k) : [];
+
+                if (ideaId) {
+                    const updates = { title, description, keywords };
+                    database.ref('ideas/' + ideaId).update(updates);
+                } else {
+                    const newId = Date.now();
+                    const newIdea = {
+                        id: newId,
+                        title,
+                        description,
+                        keywords,
+                        user: this.currentUser,
+                        timestamp: new Date().toISOString(),
+                        status: 'active'
+                    };
+                    database.ref('ideas/' + newId).set(newIdea);
+                }
+
+                this.closeModal();
+            }
+
+            sellIdea(ideaId) {
+                database.ref('ideas/' + ideaId).update({
+                    status: 'sold',
+                    soldBy: this.currentUser,
+                    soldTimestamp: new Date().toISOString()
+                });
+            }
+
+            renderIdeas() {
+                const activeContainer = document.getElementById('activeIdeas');
+                const soldContainer = document.getElementById('soldIdeas');
+                const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+
+                let activeIdeas = this.ideas.filter(i => i.status === 'active');
+                let soldIdeas = this.ideas.filter(i => i.status === 'sold');
+
+                if (searchQuery) {
+                    activeIdeas = activeIdeas.filter(idea => 
+                        idea.title.toLowerCase().includes(searchQuery) ||
+                        idea.description.toLowerCase().includes(searchQuery) ||
+                        idea.keywords.some(k => k.toLowerCase().includes(searchQuery))
+                    );
+                    soldIdeas = soldIdeas.filter(idea => 
+                        idea.title.toLowerCase().includes(searchQuery) ||
+                        idea.description.toLowerCase().includes(searchQuery) ||
+                        idea.keywords.some(k => k.toLowerCase().includes(searchQuery))
+                    );
+                }
+
+                if (activeIdeas.length > 0) {
+                    activeContainer.innerHTML = activeIdeas.map(idea => this.createIdeaCard(idea)).join('');
+                    document.getElementById('noActiveIdeas').style.display = 'none';
+                } else {
+                    activeContainer.innerHTML = '';
+                    document.getElementById('noActiveIdeas').style.display = 'block';
+                }
+
+                if (soldIdeas.length > 0) {
+                    soldContainer.innerHTML = soldIdeas.map(idea => this.createIdeaCard(idea, true)).join('');
+                    document.getElementById('noSoldIdeas').style.display = 'none';
+                } else {
+                    soldContainer.innerHTML = '';
+                    document.getElementById('noSoldIdeas').style.display = 'block';
+                }
+
+                this.attachCardListeners();
+            }
+
+            createIdeaCard(idea, isSold = false) {
+                const timestamp = new Date(idea.timestamp).toLocaleDateString('en-US', {
+                    year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+                });
+
+                const keywordTags = idea.keywords.map(k => `<span class="keyword-tag">${k}</span>`).join('');
+
+                const soldBadge = isSold ? `
+                    <div class="sold-badge">
+                        <i class="fas fa-check-circle"></i>
+                        Sold by ${idea.soldBy || idea.user}
+                    </div>
+                ` : '';
+
+                const actions = !isSold ? `
+                    <div class="idea-actions">
+                        <button class="btn-small btn-edit" data-id="${idea.id}" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn-small btn-sell" data-id="${idea.id}" title="Mark as Sold">
+                            <i class="fas fa-dollar-sign"></i>
+                        </button>
+                    </div>
+                ` : '';
+
+                return `
+                    <div class="idea-card" data-id="${idea.id}">
+                        ${soldBadge}
+                        <div class="idea-header">
+                            <h3 class="idea-title">${idea.title}</h3>
+                            ${actions}
+                        </div>
+                        <p class="idea-description">${idea.description}</p>
+                        ${idea.keywords.length > 0 ? `<div class="idea-keywords">${keywordTags}</div>` : ''}
+                        <div class="idea-meta">
+                            <span class="idea-user">
+                                <i class="fas fa-user"></i>
+                                ${idea.user}
+                            </span>
+                            <span class="idea-timestamp">
+                                <i class="fas fa-clock"></i>
+                                ${timestamp}
+                            </span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            attachCardListeners() {
+                document.querySelectorAll('.btn-edit').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        this.openModal(parseInt(btn.dataset.id));
+                    });
+                });
+
+                document.querySelectorAll('.btn-sell').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        if (confirm('Mark this idea as sold?')) {
+                            this.sellIdea(parseInt(btn.dataset.id));
+                        }
+                    });
+                });
+            }
+
+            updateCounts() {
+                const activeCount = this.ideas.filter(i => i.status === 'active').length;
+                const soldCount = this.ideas.filter(i => i.status === 'sold').length;
+                document.getElementById('activeCount').textContent = activeCount;
+                document.getElementById('soldCount').textContent = soldCount;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            new IdeaVault();
+        });
+    </script>
+</body>
+</html>
